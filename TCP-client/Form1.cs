@@ -19,32 +19,31 @@ namespace TCP_client
         {
             await Task.Run(() =>
             {
-                // соединяемся с удаленным устройством
+                // З'єднуємося з віддаленим пристроєм
                 try
                 {
-
                     IPAddress ipAddr = IPAddress.Parse(ip_address.Text);
-                    // устанавливаем удаленную конечную точку для сокета
-                    // уникальный адрес для обслуживания TCP/IP определяется комбинацией IP-адреса хоста с номером порта обслуживания
-                    IPEndPoint ipEndPoint = new IPEndPoint(ipAddr /* IP-адрес */, 49152 /* порт */);
+                    // Встановлюємо віддалену кінцеву точку для сокета
+                    // Унікальна адреса для обслуговування TCP/IP визначається комбінацією IP-адреси хоста з номером порту обслуговування
+                    IPEndPoint ipEndPoint = new IPEndPoint(ipAddr /* IP-адреса */, 49152 /* Порт */);
 
-                    // создаем потоковый сокет
-                    sock = new Socket(AddressFamily.InterNetwork /*схема адресации*/, SocketType.Stream /*тип сокета*/, ProtocolType.Tcp /*протокол*/);
-                    /* Значение InterNetwork указывает на то, что при подключении объекта Socket к конечной точке предполагается использование IPv4-адреса.
-                      SocketType.Stream поддерживает надежные двусторонние байтовые потоки в режиме с установлением подключения, без дублирования данных и 
-                      без сохранения границ данных. Объект Socket этого типа взаимодействует с одним узлом и требует предварительного установления подключения 
-                      к удаленному узлу перед началом обмена данными. Тип Stream использует протокол Tcp и схему адресации AddressFamily.
+                    // Створюємо потоковий сокет
+                    sock = new Socket(AddressFamily.InterNetwork /*Схема адресації*/, SocketType.Stream /*Тип сокета*/, ProtocolType.Tcp /*Протокол*/);
+                    /* Значення InterNetwork вказує на те, що при підключенні об'єкта Socket до кінцевої точки передбачається використання IPv4-адреси.
+                       SocketType.Stream підтримує надійні двосторонні байтові потоки в режимі із встановленням підключення, без дублювання даних і 
+                       без збереження меж даних. Об'єкт Socket цього типу взаємодіє з одним вузлом і потребує попереднього встановлення підключення 
+                       до віддаленого вузла перед початком обміну даними. Тип Stream використовує протокол Tcp і схему адресації AddressFamily.
                     */
 
-                    // соединяем сокет с удаленной конечной точкой
+                    // З'єднуємо сокет із віддаленою кінцевою точкою
                     sock.Connect(ipEndPoint);
-                    byte[] msg = Encoding.Default.GetBytes(Dns.GetHostName() /* имя узла локального компьютера */);// конвертируем строку, содержащую имя хоста, в массив байтов
-                    int bytesSent = sock.Send(msg); // отправляем серверу сообщение через сокет
-                    MessageBox.Show("Клиент " + Dns.GetHostName() + " установил соединение с " + sock.RemoteEndPoint.ToString());
+                    byte[] msg = Encoding.Default.GetBytes(Dns.GetHostName() /* Ім'я вузла локального комп'ютера */); // Конвертуємо рядок, що містить ім'я хоста, у масив байтів
+                    int bytesSent = sock.Send(msg); // Відправляємо серверу повідомлення через сокет
+                    MessageBox.Show("Клієнт " + Dns.GetHostName() + " встановив з'єднання з " + sock.RemoteEndPoint.ToString());
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Клиент: " + ex.Message);
+                    MessageBox.Show("Клієнт: " + ex.Message);
                 }
             });
         }
@@ -60,21 +59,21 @@ namespace TCP_client
             {
                 try
                 {
-                    string theMessage = textBox1.Text; // получим текст сообщения, введенный в текстовое поле
-                    byte[] msg = Encoding.Default.GetBytes(theMessage); // конвертируем строку, содержащую сообщение, в массив байтов
-                    int bytesSent = sock.Send(msg); // отправляем серверу сообщение через сокет
-                    if (theMessage.IndexOf("<end>") > -1) // если клиент отправил эту команду, то принимаем сообщение от сервера
+                    string theMessage = textBox1.Text; // Отримаємо текст повідомлення, введений у текстове поле
+                    byte[] msg = Encoding.Default.GetBytes(theMessage); // Конвертуємо рядок, що містить повідомлення, у масив байтів
+                    int bytesSent = sock.Send(msg); // Відправляємо серверу повідомлення через сокет
+                    if (theMessage.IndexOf("<end>") > -1) // Якщо клієнт відправив цю команду, то приймаємо повідомлення від сервера
                     {
                         byte[] bytes = new byte[1024];
-                        int bytesRec = sock.Receive(bytes); // принимаем данные, переданные сервером. Если данных нет, поток блокируется
-                        MessageBox.Show("Сервер (" + sock.RemoteEndPoint.ToString() + ") ответил: " + Encoding.Default.GetString(bytes, 0, bytesRec) /*конвертируем массив байтов в строку*/);
-                        sock.Shutdown(SocketShutdown.Both); // Блокируем передачу и получение данных для объекта Socket.
-                        sock.Close(); // закрываем сокет
+                        int bytesRec = sock.Receive(bytes); // Приймаємо дані, передані сервером. Якщо даних немає, потік блокується
+                        MessageBox.Show("Сервер (" + sock.RemoteEndPoint.ToString() + ") відповів: " + Encoding.Default.GetString(bytes, 0, bytesRec) /*Конвертуємо масив байтів у рядок*/);
+                        sock.Shutdown(SocketShutdown.Both); // Блокируємо передачу та отримання даних для об'єкта Socket.
+                        sock.Close(); // Закриваємо сокет
                     }
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Клиент: " + ex.Message);
+                    MessageBox.Show("Клієнт: " + ex.Message);
                 }
             });
         }
@@ -88,14 +87,16 @@ namespace TCP_client
         {
             try
             {
-                sock.Shutdown(SocketShutdown.Both); // Блокируем передачу и получение данных для объекта Socket.
-                sock.Close(); // закрываем сокет
+                if (sock != null)
+                {
+                    sock.Shutdown(SocketShutdown.Both); // Блокируємо передачу та отримання даних для об'єкта Socket.
+                    sock.Close(); // Закриваємо сокет
+                }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Клиент: " + ex.Message);
+                MessageBox.Show("Клієнт: " + ex.Message);
             }
         }
-
     }
 }

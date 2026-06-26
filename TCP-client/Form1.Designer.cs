@@ -42,7 +42,7 @@ namespace TCP_client
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(178, 43);
             this.button1.TabIndex = 0;
-            this.button1.Text = "Соединение с сервером";
+            this.button1.Text = "З'єднання з сервером";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
@@ -67,7 +67,7 @@ namespace TCP_client
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(111, 32);
             this.label1.TabIndex = 4;
-            this.label1.Text = "IP-адрес";
+            this.label1.Text = "IP-адреса";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // button3
@@ -76,7 +76,7 @@ namespace TCP_client
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(292, 55);
             this.button3.TabIndex = 5;
-            this.button3.Text = "Отправить сообщение";
+            this.button3.Text = "Надіслати повідомлення";
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
@@ -94,7 +94,7 @@ namespace TCP_client
             this.MaximizeBox = false;
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "TCP - клиент";
+            this.Text = "TCP – клієнт";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
             this.ResumeLayout(false);
             this.PerformLayout();
